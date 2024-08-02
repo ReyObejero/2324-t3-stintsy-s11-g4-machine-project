@@ -15,14 +15,10 @@ def compute_RMSE(y_true, y_pred):
         float -- Root Mean Squared Error (RMSE)
     """
 
-    # TODO: Compute the Root Mean Squared Error
-    # Compute the squared differences
     squared_diff = np.square(y_true - y_pred)
     
-    # Compute the mean of squared differences
     mean_squared_diff = np.mean(squared_diff)
     
-    # Compute RMSE by taking the square root of the mean squared difference
     rmse = np.sqrt(mean_squared_diff)
 
     return rmse
@@ -45,10 +41,6 @@ class AnalyticalMethod(object):
         Returns:
             np.ndarray -- A numpy array of shape (N, D + 1)
         """
-
-        # TODO: Append a vector of ones across the dimension of your input
-        # data. This accounts for the bias or the constant in your
-        # hypothesis function.
         ones_column = np.full_like(X, 1)
         f_transform = np.column_stack((ones_column, X))
 
@@ -66,11 +58,8 @@ class AnalyticalMethod(object):
         Returns:
             np.ndarray -- weight vector; has shape (D, 1) for dimension D
         """
-        # TODO: Call the feature_transform() method
         X = self.feature_transform(X)
 
-        # TODO: Calculate for the weights using the closed form.
-        # Hint: Use np.linalg.pinv.
         self.W = np.linalg.pinv(X).dot(y)
 
         return self.W
@@ -88,12 +77,7 @@ class AnalyticalMethod(object):
             value for the test point X[i].
         """
 
-        # TODO: Since you transformed your training data to include the bias
-        # y-intercept, also transform the features for the test to match.
         X = self.feature_transform(X)
-
-        # TODO: Compute for the predictions of the model on new data using the
-        # learned weight vectors.
         prediction = X.dot(self.W)
 
         return prediction
@@ -119,8 +103,6 @@ class PolyFitMethod(object):
             np.ndarray -- weight vector; has shape (D,)
         """
 
-
-        # TODO: Calculate for the weights using np.polyfit()
         self.W = np.polyfit(X, y, 1)
 
         return self.W
@@ -138,9 +120,6 @@ class PolyFitMethod(object):
             value for the test point X[i].
         """
 
-        # TODO: Compute for the predictions of the model on new data using the
-        # learned weight vectors.
-        # Hint: Use np.poly1d().
         poly_func = np.poly1d(self.W)
         prediction = poly_func(X)
 
